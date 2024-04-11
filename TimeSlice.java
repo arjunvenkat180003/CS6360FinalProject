@@ -2,9 +2,12 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.sql.Timestamp;
 
 public class TimeSlice
 {
+    Timestamp startTime;
+    Timestamp endTime;
     //********** MASTER INDEX */
     Map<String, Post> masterIndex;
 
@@ -19,8 +22,9 @@ public class TimeSlice
     //map userId (as a string) to a list of (posts and locations, which make up their own object as a list of two values)
     Map<String, List<List<String>>> userIndex;
     
-    public TimeSlice()
+    public TimeSlice(Timestamp startTime, Timestamp endTime)
     {
+
         masterIndex = new HashMap<>();
         masterHashStructure = new HashMap<>();
         invertedIndex = new HashMap<>();
