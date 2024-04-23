@@ -8,6 +8,6 @@ public class Post {
     {
         postId = pId;
         location = loc;
-        kWords = keywords;
+        keywords = kWords;
     }
 }

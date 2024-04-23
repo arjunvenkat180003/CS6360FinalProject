@@ -47,7 +47,8 @@ public class TimeSlice
         for(Post post: posts)
         {
             masterIndex.put(post.postId, post);
-
+            
+            //System.out.println(post.keywords);
             // String postId = post.get(0);
             // String count = post.get(1);
             // String location = post.get(2);
@@ -71,8 +72,9 @@ public class TimeSlice
             String postId = p.postId;
             String location = p.location;
             List<String> keywords = p.keywords;
-            
-
+            System.out.println(postId);
+            System.out.println(keywords);
+            //System.out.println(masterIndex.get(postId));
             //update userIndex
             if(userIndex.containsKey(userId))
             {
@@ -115,6 +117,7 @@ public class TimeSlice
 
             for(String keyword: keywords)
             {
+                //System.out.println(keyword);
                 if(invertedIndex.containsKey(keyword))
                 {
                     Map<String, List<String>> keywordHashStructure = invertedIndex.get(keyword);

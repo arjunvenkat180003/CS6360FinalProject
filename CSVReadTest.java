@@ -11,6 +11,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.HashMap;
 
 public class CSVReadTest {
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException{
@@ -28,22 +30,22 @@ public class CSVReadTest {
 
         Date startDate = sdf.parse(startTimeString);
         long epochTime = startDate.getTime(); // Convert milliseconds to seconds
-        System.out.println("Epoch time for " + startTimeString + " is: " + epochTime);
+        //System.out.println("Epoch time for " + startTimeString + " is: " + epochTime);
 
         Date endDate = sdf.parse(endTimeString);
         long endEpochTime = endDate.getTime(); // Convert milliseconds to seconds
-        System.out.println("Epoch time for " + endTimeString + " is: " + endEpochTime);
+        //System.out.println("Epoch time for " + endTimeString + " is: " + endEpochTime);
 
         long millisecondsPerPeriod = (endEpochTime-epochTime)/numTimeSlices;
 
         List<TimeSlice> listOfTimeSlices = new ArrayList<>();
-
+        Map<String, Post> globalPosts = new HashMap<>();
         long startTimeForSlice = epochTime;
         for(int i = 0; i<numTimeSlices; i++)
         {
             listOfTimeSlices.add(new TimeSlice(new Date(startTimeForSlice), new Date(startTimeForSlice+millisecondsPerPeriod-1)));
             TimeSlice t = listOfTimeSlices.get(i);
-            System.out.println(t.startTime+" "+t.endTime);
+            //System.out.println(t.startTime+" "+t.endTime);
             startTimeForSlice += millisecondsPerPeriod;
         }
 
@@ -67,7 +69,7 @@ public class CSVReadTest {
             //7-10 are time stamp, latitude, longitude, keyword
             //Data is contained within 01/01/2023 to 06/30/2023
             String[] values = line.split(",");
-            System.out.println(Arrays.toString(values));
+            //System.out.println(Arrays.toString(values));
             
             //7th index has the time stamp
             Date postDate = sdf.parse(values[7]);
@@ -85,25 +87,29 @@ public class CSVReadTest {
                     ArrayList<String> keywords = new ArrayList<>();
                     keywords.add(values[10]);
                     Post post = new Post(postId, latitude+","+longitude, keywords);
+                    globalPosts.put(postId, post);
+                    //System.out.println("newpost");
+                    //System.out.println(keywords);
+                    //System.out.println(post.keywords);
                     postsPerTimeSlice.get(i).add(post);
                 }
             }
 
         }
 
-        // List<Post> pList = postsPerTimeSlice.get(3);
+         //List<Post> pList = postsPerTimeSlice.get(3);
 
-        // for(Post p: pList)
-        // {
-        //     System.out.println(p.postId);
-        // }
+         //for(Post p: pList)
+         //{
+         //    System.out.println(p.postId);
+         //}
         
         List<List<Interaction>> interactionPerTimeSlice = new ArrayList<>();
         for(int i = 0; i<numTimeSlices; i++)
         {
             interactionPerTimeSlice.add(new ArrayList<Interaction>());
         }
-        BufferedReader br2 = new BufferedReader(new FileReader("twitter_interactions.csv"));
+        BufferedReader br2 = new BufferedReader(new FileReader("./data/twitter_interactions.csv"));
         
         lineNum = 0;
         while((line = br2.readLine()) != null)
@@ -114,7 +120,7 @@ public class CSVReadTest {
                 continue;
             }
             String[] values = line.split(",");
-            System.out.println(Arrays.toString(values));
+            //System.out.println(Arrays.toString(values));
 
             String userId = values[1];
             String postId = values[2];
@@ -127,12 +133,12 @@ public class CSVReadTest {
             for(int i = 0; i<numTimeSlices; i++)
             {
                 TimeSlice tSlice = listOfTimeSlices.get(i);
+                
 
                 if(postDate.compareTo(tSlice.startTime) >= 0 && postDate.compareTo(tSlice.endTime) <= 0)
                 {
                     ArrayList<String> keywords = new ArrayList<>();
-                    keywords.add(values[10]);
-                    Post post = new Post(postId, latitude+","+longitude, keywords);
+                    Post post = new Post(postId, latitude+","+longitude, globalPosts.get(postId).keywords);
                     interactionPerTimeSlice.get(i).add(new Interaction(userId, post));
                     
                 }
@@ -140,12 +146,9 @@ public class CSVReadTest {
 
         }
 
-        List<Interaction> iList = interactionPerTimeSlice.get(3);
-
-        for(Interaction inter: iList)
-        {
-            System.out.println(inter.userId+" "+inter.post.postId);
+        for(int x = 0; x < listOfTimeSlices.size(); x++){
+            listOfTimeSlices.get(x).indexUpdate( interactionPerTimeSlice.get(x), postsPerTimeSlice.get(x));
         }
-
+        
     }
 }
