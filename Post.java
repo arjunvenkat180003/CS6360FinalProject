@@ -2,12 +2,20 @@ import java.util.List;
 public class Post {
     String postId;
     String location;
-    List<String> keywords;
+    int count;
+    List<List<String>> parentSlice;
 
-    Post(String pId, String loc, List<String> kWords)
+    Post(String pId, String loc, int c, List<List<String>> l)
     {
         postId = pId;
         location = loc;
-        kWords = keywords;
+        count = c;
+        parentSlice = l;
     }
+
+    public int getCount(){
+        return count;
+    }
+
+    public String getId(){return postId;}
 }
