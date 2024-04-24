@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.sql.Timestamp;
 import java.util.Collections;
+import java.util.Date;
 
 public class BaselineCOMQ {
     List<TimeSlice> timeSlices;
@@ -13,7 +14,7 @@ public class BaselineCOMQ {
         this.timeSlices = timeSlices;
     }
 
-    public List<String> evalQuery(String community, Timestamp startTimestamp, Timestamp endTimestamp, int k, double cLatitude, double cLongitude, int r, List<String> keywords)
+    public List<String> evalQuery(String community, Date startTimestamp, Date endTimestamp, int k, double cLatitude, double cLongitude, int r, List<String> keywords)
     {
         //contains a list of lists which contain (post id, loc, count), represented as a list
         List<List<List<String>>> queryLists = new ArrayList<>();
@@ -33,6 +34,11 @@ public class BaselineCOMQ {
 
             List<List<String>> entries = new ArrayList<>();
 
+            Map<String, Post> masterIndex = timeSlice.masterIndex;
+            Map<String, List<String>> masterHashStructure = timeSlice.masterHashStructure;
+
+            //System.out.println("master index "+masterIndex.keySet());
+            //System.out.println("master hash structure "+masterHashStructure.keySet());
 
             Map<String, Map<String, List<String>>> invertedIndex = timeSlice.invertedIndex;
 
@@ -40,11 +46,18 @@ public class BaselineCOMQ {
 
             for(String keyword: keywords)
             {
-                invertedIndexEntries.add(invertedIndex.get(keyword));
+                System.out.println("keyword (test1) "+keyword);
+                System.out.println(" inverted index key set "+invertedIndex.keySet());
+                System.out.println(invertedIndex.get(keyword));
+                if(invertedIndex.containsKey(keyword))
+                    invertedIndexEntries.add(invertedIndex.get(keyword));
             }
+
+            System.out.println("inverted index entries "+invertedIndexEntries);
 
             for(Map<String, List<String>> invertedIndexEntry: invertedIndexEntries)
             {
+                System.out.println(invertedIndexEntry);
                 for(String postId: invertedIndexEntry.keySet())
                 {
                     List<String> entry = new ArrayList<>();
@@ -59,7 +72,7 @@ public class BaselineCOMQ {
 
             
         }
-
+        System.out.println(queryLists);
         for(List<List<String>> entries: queryLists)
         {
             for (List<String> entry: entries)
@@ -87,12 +100,19 @@ public class BaselineCOMQ {
                 }
             }
         }
-
+        
         List<String> topPostIds = new ArrayList<>(hashStructureA.keySet());
+        System.out.println("hash structure a keyset "+hashStructureA.keySet());
 
         Collections.sort(topPostIds, new PostIdComparator(hashStructureA));
-
-        return topPostIds.subList(0, k);
+        if(k <= topPostIds.size())
+        {
+            return topPostIds.subList(0, k);
+        }
+        else
+        {
+            return topPostIds;
+        }
     }
 
 
