@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class CSVReadTest {
     public static void main(String[] args) throws FileNotFoundException, IOException, ParseException{
-        BufferedReader br = new BufferedReader(new FileReader("edited_twitter_dataset_1.csv"));
+        BufferedReader br = new BufferedReader(new FileReader("edited_twitter_posts.csv"));
 
         String line;
 
@@ -75,8 +75,8 @@ public class CSVReadTest {
             Date postDate = sdf.parse(values[7]);
 
             String postId = values[2];
-            String latitude = values[8];
-            String longitude = values[9];
+            String latitude = values[9];
+            String longitude = values[10];
 
             for(int i = 0; i<numTimeSlices; i++)
             {
@@ -85,7 +85,7 @@ public class CSVReadTest {
                 if(postDate.compareTo(tSlice.startTime) >= 0 && postDate.compareTo(tSlice.endTime) <= 0)
                 {
                     ArrayList<String> keywords = new ArrayList<>();
-                    keywords.add(values[10]);
+                    keywords.add(values[8]);
                     Post post = new Post(postId, latitude+","+longitude, keywords);
                     globalPosts.put(postId, post);
                     //System.out.println("newpost");
@@ -150,5 +150,9 @@ public class CSVReadTest {
             listOfTimeSlices.get(x).indexUpdate( interactionPerTimeSlice.get(x), postsPerTimeSlice.get(x));
         }
         
+        BaselineCOMQTest bscqTest = new BaselineCOMQTest(listOfTimeSlices);
+        bscqTest.test1();
+        bscqTest.test2();
+
     }
 }

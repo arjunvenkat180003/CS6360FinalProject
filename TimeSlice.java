@@ -72,8 +72,8 @@ public class TimeSlice
             String postId = p.postId;
             String location = p.location;
             List<String> keywords = p.keywords;
-            System.out.println(postId);
-            System.out.println(keywords);
+            //System.out.println(postId);
+            //System.out.println(keywords);
             //System.out.println(masterIndex.get(postId));
             //update userIndex
             if(userIndex.containsKey(userId))
@@ -122,12 +122,27 @@ public class TimeSlice
                 {
                     Map<String, List<String>> keywordHashStructure = invertedIndex.get(keyword);
 
-                    List<String> postValue = keywordHashStructure.get(postId);
-                    int count = Integer.parseInt(postValue.get(1));
+                    //System.out.println("kwhs alr inside inverted index "+keywordHashStructure+" "+postId);
 
-                    postValue.set(1,  ""+(count+1)); 
-                    
-                    keywordHashStructure.put(postId, postValue);
+                    if(keywordHashStructure.containsKey(postId)){
+
+                        List<String> postValue = keywordHashStructure.get(postId);
+
+                        int count = Integer.parseInt(postValue.get(1));
+
+                        postValue.set(1,  ""+(count+1)); 
+                        
+                        keywordHashStructure.put(postId, postValue);
+
+                    }
+                    else
+                    {
+                        List<String> postValue = new ArrayList<>();
+                        postValue.add(location);
+                        postValue.add("1");
+
+                        keywordHashStructure.put(postId, postValue);
+                    }
 
                 }
                 else
@@ -139,6 +154,9 @@ public class TimeSlice
                     postValue.add("1");
 
                     keywordHashStructure.put(postId, postValue);
+
+                    //System.out.println("kw + kwhs "+keyword+" "+keywordHashStructure);
+                    invertedIndex.put(keyword, keywordHashStructure);
                 }
             }
 
