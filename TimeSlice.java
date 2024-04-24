@@ -3,11 +3,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class TimeSlice
 {
-    Timestamp startTime;
-    Timestamp endTime;
+    Date startTime;
+    Date endTime;
+
+    
+    long endTimeInMS;
+
     //********** MASTER INDEX */
     Map<String, Post> masterIndex;
 
@@ -22,7 +27,7 @@ public class TimeSlice
     //map userId (as a string) to a list of (posts and locations, which make up their own object as a list of two values)
     Map<String, List<List<String>>> userIndex;
     
-    public TimeSlice(Timestamp startTime, Timestamp endTime)
+    public TimeSlice(Date startTime, Date endTime)
     {
 
         masterIndex = new HashMap<>();
@@ -30,6 +35,8 @@ public class TimeSlice
         invertedIndex = new HashMap<>();
         userIndex = new HashMap<>();
 
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     //interactions - a list of (user, post)
@@ -40,7 +47,8 @@ public class TimeSlice
         for(Post post: posts)
         {
             masterIndex.put(post.postId, post);
-
+            
+            //System.out.println(post.keywords);
             // String postId = post.get(0);
             // String count = post.get(1);
             // String location = post.get(2);
@@ -64,8 +72,9 @@ public class TimeSlice
             String postId = p.postId;
             String location = p.location;
             List<String> keywords = p.keywords;
-            
-
+            System.out.println(postId);
+            System.out.println(keywords);
+            //System.out.println(masterIndex.get(postId));
             //update userIndex
             if(userIndex.containsKey(userId))
             {
@@ -108,6 +117,7 @@ public class TimeSlice
 
             for(String keyword: keywords)
             {
+                //System.out.println(keyword);
                 if(invertedIndex.containsKey(keyword))
                 {
                     Map<String, List<String>> keywordHashStructure = invertedIndex.get(keyword);
