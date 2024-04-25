@@ -105,6 +105,7 @@ public class BaselineCOMQ {
         System.out.println("hash structure a keyset "+hashStructureA.keySet());
 
         Collections.sort(topPostIds, new PostIdComparator(hashStructureA));
+        System.out.println("k "+k);
         if(k <= topPostIds.size())
         {
             return topPostIds.subList(0, k);

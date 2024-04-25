@@ -1,8 +1,3 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -14,7 +9,7 @@ public class FastComCQ {
         this.timeSlices = timeSlices;
     }
 
-    public List<List<String>> evalQuery(String community, Timestamp startTimestamp, Timestamp endTimestamp, int k, double cLatitude, double cLongitude, int r, List<String> keywords)
+    public List<List<String>> evalQuery(String community, Date startTimestamp, Date endTimestamp, int k, double cLatitude, double cLongitude, int r, List<String> keywords)
     {
         //contains a list of lists which contain (post id, loc, count), represented as a list
         List<List<List<String>>> queryLists = new ArrayList<>();
@@ -42,7 +37,8 @@ public class FastComCQ {
 
             for(String keyword: keywords)
             {
-                invertedIndexEntries.add(invertedIndex.get(keyword));
+                if(invertedIndex.containsKey(keyword))
+                    invertedIndexEntries.add(invertedIndex.get(keyword));
             }
 
             for(Map<String, List<String>> invertedIndexEntry: invertedIndexEntries)
@@ -80,6 +76,7 @@ public class FastComCQ {
 
                 if(distance < r)
                 {
+                    System.out.println("possible post to add "+postId);
                     pq.add(e);
                     break;
                 }
@@ -92,10 +89,15 @@ public class FastComCQ {
             sumQ += temp.next().getCount();
         }
 
+       for(Post p: pq)
+       {
+            System.out.println("Post id in pq "+p.postId);
+       }
         while(!pq.isEmpty()){
             Post e = pq.poll(); 
                 for(List<String> entry: e.parentSlice){
                     String postId = entry.get(0);
+                    System.out.println(e+" postId "+postId);
                     String location = entry.get(1);
                     int count = Integer.parseInt(entry.get(2));
                     //Use IDcomparator to sort pq, store as lists of above variables
@@ -108,7 +110,9 @@ public class FastComCQ {
 
                     if(distance < r)
                     {
-                       pq.add(new Post(postId,location, count, e.parentSlice));
+                        if(postId != e.postId)
+                            pq.add(new Post(postId,location, count, e.parentSlice));
+                       //pq.add(new Post(postId,location, count, e.parentSlice));
                        sumQ -= e.getCount();
                        sumQ += count;
                        break;
@@ -130,15 +134,15 @@ public class FastComCQ {
             String s = "" + count_total;
             t.add(0,e.getId());
             t.add(1,s);
-            ans.add(t);
+            //ans.add(t);
             if(ans.size() < k){
                 ans.add(t);
             }
-            else if(count_total > Integer.parseInt(ans.get(k).get(1))){
-                ans.remove(k);
+            else if(count_total > Integer.parseInt(ans.get(k-1).get(1))){
+                ans.remove(k-1);
                 ans.add(t);
             }
-            if(ans.size() > k && Integer.parseInt(ans.get(k).get(1)) < sumQ)
+            if(ans.size() >= k && Integer.parseInt(ans.get(k-1).get(1)) <= sumQ)
                 break;
         }
         return ans;

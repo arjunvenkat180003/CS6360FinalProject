@@ -4,6 +4,14 @@ public class Post {
     String location;
     int count;
     List<List<String>> parentSlice;
+    List<String> keywords;
+
+    Post(String pId, String loc, List<String> kWords)
+    {
+        postId = pId;
+        location = loc;
+        keywords = kWords;
+    }
 
     Post(String pId, String loc, int c, List<List<String>> l)
     {
@@ -19,3 +27,5 @@ public class Post {
 
     public String getId(){return postId;}
 }
+
+

@@ -29,7 +29,7 @@ public class BaselineCOMQTest {
         Date endDate = sdf.parse(endTimeString);
 
         List<String> keywords = new ArrayList<>();
-        keywords.add("week");
+        keywords.add("receive");
 
         List<String> output = bscq.evalQuery(null, startDate, endDate, 10, 45, -35, 4, keywords);
 
