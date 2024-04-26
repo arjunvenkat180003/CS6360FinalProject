@@ -156,7 +156,7 @@ public class CSVReadTest {
 
         FastComCQTest fccqTest = new FastComCQTest(listOfTimeSlices);
 
-        fccqTest.test1();
+        fccqTest.test2();
 
     }
 }

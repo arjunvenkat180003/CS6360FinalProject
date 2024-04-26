@@ -65,6 +65,9 @@ public class FastComCQ {
                 String location = entry.get(1);
                 int count = Integer.parseInt(entry.get(2));
                 List<List<String>> parentSlice = entries;
+                //
+                //System.out.println("parentSlice "+parentSlice);
+                //
                 Post e = new Post(postId, location, count, parentSlice);
                 //Use IDcomparator to sort pq, store as lists of above variables
                 String[] latitudeAndLongitude = location.split(",");
@@ -76,7 +79,7 @@ public class FastComCQ {
 
                 if(distance < r)
                 {
-                    System.out.println("possible post to add "+postId);
+                    //System.out.println("possible post to add "+postId);
                     pq.add(e);
                     break;
                 }
@@ -91,13 +94,13 @@ public class FastComCQ {
 
        for(Post p: pq)
        {
-            System.out.println("Post id in pq "+p.postId);
+            //System.out.println("Post id in pq "+p.postId);
        }
         while(!pq.isEmpty()){
             Post e = pq.poll(); 
                 for(List<String> entry: e.parentSlice){
                     String postId = entry.get(0);
-                    System.out.println(e+" postId "+postId);
+                    //System.out.println(e+" postId "+postId);
                     String location = entry.get(1);
                     int count = Integer.parseInt(entry.get(2));
                     //Use IDcomparator to sort pq, store as lists of above variables
@@ -108,14 +111,41 @@ public class FastComCQ {
 
                     double distance = Math.sqrt((postLatitude-cLatitude)*(postLatitude-cLatitude) + (postLongitude-cLongitude)*(postLongitude-cLongitude));
 
+                    //System.out.println("post id inside pq loop "+postId);
                     if(distance < r)
                     {
-                        if(postId != e.postId)
+                        //System.out.println("post id inside pq loop with distance less than r "+postId);
+                    //     if(postId != e.postId)
+                    //         pq.add(new Post(postId,location, count, e.parentSlice));
+                    //    //pq.add(new Post(postId,location, count, e.parentSlice));
+                    //    sumQ -= e.getCount();
+                    //    sumQ += count;
+                    //    break;
+                        boolean isInsideAns = false;
+                        for(List<String> ansValue: ans)
+                        {
+                           //System.out.println("ans "+ans);
+                            boolean randomBool = ansValue.get(0).equals(postId);
+                            //System.out.println("random bool "+randomBool);
+                            if(randomBool == true)
+                            {
+                                //System.out.println(ansValue.get(0).equals(postId));
+                                //System.out.println(ansValue+" "+ansValue.get(0)+" "+postId);
+                                //System.out.println("another value");
+                                //System.out.println("alr inside ans");
+                                isInsideAns = true;
+                                break;
+                            }
+
+                        }
+                        if (!isInsideAns && postId != e.postId){
+                            //System.out.println("not inside ans and postid != e.postId "+postId);
                             pq.add(new Post(postId,location, count, e.parentSlice));
                        //pq.add(new Post(postId,location, count, e.parentSlice));
                        sumQ -= e.getCount();
                        sumQ += count;
                        break;
+                       }
                     }
                 }
             
@@ -135,6 +165,7 @@ public class FastComCQ {
             t.add(0,e.getId());
             t.add(1,s);
             //ans.add(t);
+            //System.out.println("sumq "+sumQ);
             if(ans.size() < k){
                 ans.add(t);
             }
@@ -143,7 +174,10 @@ public class FastComCQ {
                 ans.add(t);
             }
             if(ans.size() >= k && Integer.parseInt(ans.get(k-1).get(1)) <= sumQ)
+            {
+                //System.out.println("Exit condition of ans.size > k  and sumq condition reached");
                 break;
+            }
         }
         return ans;
     }

@@ -46,14 +46,14 @@ public class BaselineCOMQ {
 
             for(String keyword: keywords)
             {
-                System.out.println("keyword (test1) "+keyword);
-                System.out.println(" inverted index key set "+invertedIndex.keySet());
-                System.out.println(invertedIndex.get(keyword));
+                //System.out.println("keyword (test1) "+keyword);
+                //System.out.println(" inverted index key set "+invertedIndex.keySet());
+                //System.out.println(invertedIndex.get(keyword));
                 if(invertedIndex.containsKey(keyword))
                     invertedIndexEntries.add(invertedIndex.get(keyword));
             }
 
-            System.out.println("inverted index entries "+invertedIndexEntries);
+            //System.out.println("inverted index entries "+invertedIndexEntries);
 
             for(Map<String, List<String>> invertedIndexEntry: invertedIndexEntries)
             {
@@ -72,7 +72,7 @@ public class BaselineCOMQ {
 
             
         }
-        System.out.println(queryLists);
+        //System.out.println(queryLists);
         for(List<List<String>> entries: queryLists)
         {
             for (List<String> entry: entries)
@@ -91,11 +91,12 @@ public class BaselineCOMQ {
                 {
                     if(hashStructureA.containsKey(postId))
                     {
+                        System.out.println("adding another +1 to the key "+postId);
                         hashStructureA.put(postId, hashStructureA.get(postId)+1);
                     }
                     else
                     {
-                        hashStructureA.put(postId, 1);
+                        hashStructureA.put(postId, Integer.parseInt(entry.get(2)));
                     }
                 }
             }
