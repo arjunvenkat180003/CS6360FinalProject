@@ -57,7 +57,7 @@ public class BaselineCOMQ {
 
             for(Map<String, List<String>> invertedIndexEntry: invertedIndexEntries)
             {
-                System.out.println(invertedIndexEntry);
+                //System.out.println(invertedIndexEntry);
                 for(String postId: invertedIndexEntry.keySet())
                 {
                     List<String> entry = new ArrayList<>();
@@ -91,7 +91,7 @@ public class BaselineCOMQ {
                 {
                     if(hashStructureA.containsKey(postId))
                     {
-                        System.out.println("adding another +1 to the key "+postId);
+                        //System.out.println("adding another +1 to the key "+postId);
                         hashStructureA.put(postId, hashStructureA.get(postId)+1);
                     }
                     else
@@ -103,10 +103,10 @@ public class BaselineCOMQ {
         }
         
         List<String> topPostIds = new ArrayList<>(hashStructureA.keySet());
-        System.out.println("hash structure a keyset "+hashStructureA.keySet());
+        //System.out.println("hash structure a keyset "+hashStructureA.keySet());
 
         Collections.sort(topPostIds, new PostIdComparator(hashStructureA));
-        System.out.println("k "+k);
+        //System.out.println("k "+k);
         if(k <= topPostIds.size())
         {
             return topPostIds.subList(0, k);

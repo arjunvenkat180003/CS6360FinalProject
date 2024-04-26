@@ -151,12 +151,33 @@ public class CSVReadTest {
         }
         
         BaselineCOMQTest bscqTest = new BaselineCOMQTest(listOfTimeSlices);
-        bscqTest.test1();
+        //bscqTest.test1();
         //bscqTest.test2();
 
         FastComCQTest fccqTest = new FastComCQTest(listOfTimeSlices);
 
-        fccqTest.test2();
+        //fccqTest.test2();
+
+        List<String> keywords = new ArrayList<>();
+        keywords.add("receive");
+        keywords.add("continue");
+        keywords.add("yard");
+        keywords.add("less");
+        keywords.add("you");
+
+       
+
+
+
+        long startTime = System.currentTimeMillis();
+        fccqTest.testVaryingTimeWithKeywords("2023-01-01 00:00:00", "2023-06-30 23:59:59", keywords);
+        long endTime = System.currentTimeMillis();
+        // startTime /= 1000;
+        // endTime /= 1000;
+        long difference = endTime-startTime;
+        System.out.println("For r=7 ");
+        System.out.println("Time to eval : "+difference);
+
 
     }
 }
