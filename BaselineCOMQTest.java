@@ -31,7 +31,7 @@ public class BaselineCOMQTest {
         List<String> keywords = new ArrayList<>();
         keywords.add("receive");
 
-        List<String> output = bscq.evalQuery(null, startDate, endDate, 10, 45, -35, 4, keywords);
+        List<String> output = bscq.evalQuery("Finance", startDate, endDate, 10, 45, -35, 4, keywords);
 
         System.out.println("Test 1 "+output);
     }
@@ -49,7 +49,7 @@ public class BaselineCOMQTest {
         keywords.add("week");
         keywords.add("suddenly");
 
-        List<String> output = bscq.evalQuery(null, startDate, endDate, 10, 45, -35, 4, keywords);
+        List<String> output = bscq.evalQuery("Finance", startDate, endDate, 10, 45, -35, 4, keywords);
 
         System.out.println("Test 2 "+output);
     }
@@ -65,7 +65,7 @@ public class BaselineCOMQTest {
         List<String> keywords = new ArrayList<>();
         keywords.add("receive");
 
-        List<String> output = bscq.evalQuery(null, startDate, endDate, kValue, 45, -35, 4, keywords);
+        List<String> output = bscq.evalQuery("Finance", startDate, endDate, kValue, 45, -35, 4, keywords);
 
         System.out.println("test varying k "+kValue+": "+output);
 
@@ -79,7 +79,7 @@ public class BaselineCOMQTest {
         List<String> keywords = new ArrayList<>();
         keywords.add("receive");
 
-        List<String> output = bscq.evalQuery(null, startDate, endDate, 5, 45, -35, 4, keywords);
+        List<String> output = bscq.evalQuery("Finance", startDate, endDate, 5, 45, -35, 4, keywords);
 
         System.out.println("test varying startdate "+startTimeString+" "+endTimeString+": "+output);
     }
@@ -92,7 +92,7 @@ public class BaselineCOMQTest {
         Date startDate = sdf.parse(startTimeString);
         Date endDate = sdf.parse(endTimeString);
 
-        List<String> output = bscq.evalQuery(null, startDate, endDate, 5, 45, -35, 4, keywords);
+        List<String> output = bscq.evalQuery("Finance", startDate, endDate, 5, 45, -35, 4, keywords);
 
         System.out.println("test varying keywords "+keywords+": "+output);
 
@@ -109,7 +109,7 @@ public class BaselineCOMQTest {
         List<String> keywords = new ArrayList<>();
         keywords.add("receive");
 
-        List<String> output = bscq.evalQuery(null, startDate, endDate, 5, 45, -35, r, keywords);
+        List<String> output = bscq.evalQuery("Finance", startDate, endDate, 5, 45, -35, r, keywords);
 
         System.out.println("test varying r "+r+": "+output);
 
@@ -124,7 +124,7 @@ public class BaselineCOMQTest {
         Date endDate = sdf.parse(endTimeString);
 
 
-        List<String> output = bscq.evalQuery(null, startDate, endDate, k, 45, -35, 4, keywords);
+        List<String> output = bscq.evalQuery("Finance", startDate, endDate, k, 45, -35, 4, keywords);
 
         System.out.println("test varying k with keywords "+keywords+": "+output);
     }
@@ -134,7 +134,7 @@ public class BaselineCOMQTest {
         Date startDate = sdf.parse(startTimeString);
         Date endDate = sdf.parse(endTimeString);
 
-        List<String> output = bscq.evalQuery(null, startDate, endDate, 5, 45, -35, 4, keywords);
+        List<String> output = bscq.evalQuery("Finance", startDate, endDate, 5, 45, -35, 4, keywords);
 
         System.out.println("test varying kw with time "+keywords+": "+output);
     }

@@ -154,7 +154,7 @@ public class CSVReadTest {
 
         //determine both the results of the query as well as the time taken to evaluate
         long startTime = System.currentTimeMillis();
-        bscqTest.testVaryingTimeWithKeywords("2023-01-01 00:00:00", "2023-06-30 23:59:59", keywords);
+        fccqTest.testVaryingTimeWithKeywords("2023-01-01 00:00:00", "2023-06-30 23:59:59", keywords);
         long endTime = System.currentTimeMillis();
         long difference = endTime-startTime;
         System.out.println("For r=7 ");

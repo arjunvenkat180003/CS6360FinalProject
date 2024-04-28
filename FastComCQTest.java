@@ -33,7 +33,7 @@ public class FastComCQTest {
         List<String> keywords = new ArrayList<>();
         keywords.add("receive");
 
-        List<List<String>> output = fccq.evalQuery(null, startDate, endDate, 10, 45, -35, 4, keywords);
+        List<List<String>> output = fccq.evalQuery("Finance", startDate, endDate, 10, 45, -35, 4, keywords);
 
         System.out.println("FastComCQ Test 1 "+output);
     }
@@ -51,7 +51,7 @@ public class FastComCQTest {
         List<String> keywords = new ArrayList<>();
         keywords.add("pay");
 
-        List<List<String>> output = fccq.evalQuery(null, startDate, endDate, 10, 45, -35, 4, keywords);
+        List<List<String>> output = fccq.evalQuery("Finance", startDate, endDate, 10, 45, -35, 4, keywords);
 
         System.out.println("FastComCQ Test 2 "+output);
     }
@@ -67,7 +67,7 @@ public class FastComCQTest {
         List<String> keywords = new ArrayList<>();
         keywords.add("receive");
 
-        List<List<String>> output = fccq.evalQuery(null, startDate, endDate, kValue, 45, -35, 4, keywords);
+        List<List<String>> output = fccq.evalQuery("Finance", startDate, endDate, kValue, 45, -35, 4, keywords);
 
         System.out.println("test varying k "+kValue+": "+output);
 
@@ -81,7 +81,7 @@ public class FastComCQTest {
         List<String> keywords = new ArrayList<>();
         keywords.add("receive");
 
-        List<List<String>> output = fccq.evalQuery(null, startDate, endDate, 5, 45, -35, 4, keywords);
+        List<List<String>> output = fccq.evalQuery("Finance", startDate, endDate, 5, 45, -35, 4, keywords);
 
         System.out.println("test varying startdate "+startTimeString+" "+endTimeString+": "+output);
     }
@@ -94,7 +94,7 @@ public class FastComCQTest {
         Date startDate = sdf.parse(startTimeString);
         Date endDate = sdf.parse(endTimeString);
 
-        List<List<String>> output = fccq.evalQuery(null, startDate, endDate, 5, 45, -35, 4, keywords);
+        List<List<String>> output = fccq.evalQuery("Finance", startDate, endDate, 5, 45, -35, 4, keywords);
 
         System.out.println("test varying keywords "+keywords+": "+output);
 
@@ -111,7 +111,7 @@ public class FastComCQTest {
         List<String> keywords = new ArrayList<>();
         keywords.add("receive");
 
-        List<List<String>> output = fccq.evalQuery(null, startDate, endDate, 5, 45, -35, r, keywords);
+        List<List<String>> output = fccq.evalQuery("Finance", startDate, endDate, 5, 45, -35, r, keywords);
 
         System.out.println("test varying r "+r+": "+output);
 
@@ -126,7 +126,7 @@ public class FastComCQTest {
         Date startDate = sdf.parse(startTimeString);
         Date endDate = sdf.parse(endTimeString);
 
-        List<List<String>> output = fccq.evalQuery(null, startDate, endDate, k, 45, -35, 4, keywords);
+        List<List<String>> output = fccq.evalQuery("Finance", startDate, endDate, k, 45, -35, 4, keywords);
 
         System.out.println("test varying k with keywords "+keywords+": "+output);
     }
@@ -137,7 +137,7 @@ public class FastComCQTest {
         Date startDate = sdf.parse(startTimeString);
         Date endDate = sdf.parse(endTimeString);
 
-        List<List<String>> output = fccq.evalQuery(null, startDate, endDate, 5, 45, -35, 4, keywords);
+        List<List<String>> output = fccq.evalQuery("Finance", startDate, endDate, 5, 45, -35, 4, keywords);
 
         System.out.println("test varying kw with time "+keywords+": "+output);
     }
