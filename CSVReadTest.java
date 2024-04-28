@@ -156,7 +156,7 @@ public class CSVReadTest {
 
 
         long startTime = System.currentTimeMillis();
-        fccqTest.testVaryingTimeWithKeywords("2023-01-01 00:00:00", "2023-06-30 23:59:59", keywords);
+        bscqTest.testVaryingTimeWithKeywords("2023-01-01 00:00:00", "2023-06-30 23:59:59", keywords);
         long endTime = System.currentTimeMillis();
         // startTime /= 1000;
         // endTime /= 1000;
