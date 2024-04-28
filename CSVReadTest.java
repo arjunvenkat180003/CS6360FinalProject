@@ -29,12 +29,10 @@ public class CSVReadTest {
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 
         Date startDate = sdf.parse(startTimeString);
-        long epochTime = startDate.getTime(); // Convert milliseconds to seconds
-        //System.out.println("Epoch time for " + startTimeString + " is: " + epochTime);
+        long epochTime = startDate.getTime(); 
 
         Date endDate = sdf.parse(endTimeString);
-        long endEpochTime = endDate.getTime(); // Convert milliseconds to seconds
-        //System.out.println("Epoch time for " + endTimeString + " is: " + endEpochTime);
+        long endEpochTime = endDate.getTime();
 
         long millisecondsPerPeriod = (endEpochTime-epochTime)/numTimeSlices;
 
@@ -45,7 +43,6 @@ public class CSVReadTest {
         {
             listOfTimeSlices.add(new TimeSlice(new Date(startTimeForSlice), new Date(startTimeForSlice+millisecondsPerPeriod-1)));
             TimeSlice t = listOfTimeSlices.get(i);
-            //System.out.println(t.startTime+" "+t.endTime);
             startTimeForSlice += millisecondsPerPeriod;
         }
 
@@ -65,8 +62,6 @@ public class CSVReadTest {
                 lineNum = 1;
                 continue;
             }
-            //in values, index 0 is the index, both 1 and 2 are tweet id, 3 is username, 4 is text,  5 is retweets, 6 is likes
-            //7-10 are time stamp, latitude, longitude, keyword
             //Data is contained within 01/01/2023 to 06/30/2023
             String[] values = line.split(",");
             //System.out.println(Arrays.toString(values));
@@ -74,6 +69,7 @@ public class CSVReadTest {
             //7th index has the time stamp
             Date postDate = sdf.parse(values[8]);
 
+            //get postId, lat, and long at these specifc indices on the line
             String postId = values[3];
             String latitude = values[10];
             String longitude = values[11];
@@ -88,21 +84,11 @@ public class CSVReadTest {
                     keywords.add(values[9]);
                     Post post = new Post(postId, latitude+","+longitude, keywords);
                     globalPosts.put(postId, post);
-                    //System.out.println("newpost");
-                    //System.out.println(keywords);
-                    //System.out.println(post.keywords);
                     postsPerTimeSlice.get(i).add(post);
                 }
             }
 
         }
-
-         //List<Post> pList = postsPerTimeSlice.get(3);
-
-         //for(Post p: pList)
-         //{
-         //    System.out.println(p.postId);
-         //}
         
         List<List<Interaction>> interactionPerTimeSlice = new ArrayList<>();
         for(int i = 0; i<numTimeSlices; i++)
