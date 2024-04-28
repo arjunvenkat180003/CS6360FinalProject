@@ -92,9 +92,6 @@ public class BaselineCOMQTest {
         Date startDate = sdf.parse(startTimeString);
         Date endDate = sdf.parse(endTimeString);
 
-        //List<String> keywords = new ArrayList<>();
-        //keywords.add("receive");
-
         List<String> output = bscq.evalQuery(null, startDate, endDate, 5, 45, -35, 4, keywords);
 
         System.out.println("test varying keywords "+keywords+": "+output);
@@ -126,8 +123,6 @@ public class BaselineCOMQTest {
         Date startDate = sdf.parse(startTimeString);
         Date endDate = sdf.parse(endTimeString);
 
-        //List<String> keywords = new ArrayList<>();
-        //keywords.add("receive");
 
         List<String> output = bscq.evalQuery(null, startDate, endDate, k, 45, -35, 4, keywords);
 
@@ -136,14 +131,8 @@ public class BaselineCOMQTest {
 
     public void testVaryingTimeWithKeywords(String startTimeString, String endTimeString, List<String> keywords) throws ParseException
     {
-        //String startTimeString = "2023-01-01 00:00:00";
-       //String endTimeString = "2023-06-30 23:59:59";
-
         Date startDate = sdf.parse(startTimeString);
         Date endDate = sdf.parse(endTimeString);
-
-        //List<String> keywords = new ArrayList<>();
-        //keywords.add("receive");
 
         List<String> output = bscq.evalQuery(null, startDate, endDate, 5, 45, -35, 4, keywords);
 
