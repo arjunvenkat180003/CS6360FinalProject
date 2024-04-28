@@ -35,6 +35,7 @@ public class CSVReadTest {
 
         long millisecondsPerPeriod = (endEpochTime-epochTime)/numTimeSlices;
 
+        //create new time slices of equal size based on the starting and ending dates
         List<TimeSlice> listOfTimeSlices = new ArrayList<>();
         Map<String, Post> globalPosts = new HashMap<>();
         long startTimeForSlice = epochTime;
@@ -53,6 +54,7 @@ public class CSVReadTest {
             postsPerTimeSlice.add(new ArrayList<Post>());
         }
 
+        //go through CSV and obtain posts to index for each time slice
         int lineNum = 0;
         while((line = br.readLine()) != null)
         {
@@ -129,18 +131,20 @@ public class CSVReadTest {
 
         }
 
+        //index update occurs
         for(int x = 0; x < listOfTimeSlices.size(); x++){
             listOfTimeSlices.get(x).indexUpdate( interactionPerTimeSlice.get(x), postsPerTimeSlice.get(x));
         }
         
+
+        //perform testing of both algorithms
+        //generate the test object for each algorithm and run one of the testing methods with the required params
+        //to obtain the results of that query
         BaselineCOMQTest bscqTest = new BaselineCOMQTest(listOfTimeSlices);
-        //bscqTest.test1();
-        //bscqTest.test2();
 
         FastComCQTest fccqTest = new FastComCQTest(listOfTimeSlices);
 
-        //fccqTest.test2();
-
+        //keywords for testing the vary time with keywords method
         List<String> keywords = new ArrayList<>();
         keywords.add("receive");
         keywords.add("continue");
@@ -151,7 +155,7 @@ public class CSVReadTest {
        
 
 
-
+        //determine both the results of the query as well as the time taken to evaluate
         long startTime = System.currentTimeMillis();
         bscqTest.testVaryingTimeWithKeywords("2023-01-01 00:00:00", "2023-06-30 23:59:59", keywords);
         long endTime = System.currentTimeMillis();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
+//tests all of the FastComCQ Experiments
 public class FastComCQTest {
     List<TimeSlice> timeSlices;
     String pattern = "yyyy-MM-dd HH:mm:ss";
