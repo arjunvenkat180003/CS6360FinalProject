@@ -16,6 +16,7 @@ public class FastComCQ {
             return Integer.compare(l1.getCount(), l2.getCount());
         });
 
+        //filter the time slices for relevant posts
         for(TimeSlice timeSlice: timeSlices)
         {
             if(timeSlice.endTime.compareTo(startTimestamp) < 0)
@@ -56,6 +57,7 @@ public class FastComCQ {
  
         }
 
+        //add the most popular post per time slice to the priority queue
         for(List<List<String>> entries: queryLists)
         {
             for (List<String> entry: entries)
@@ -88,6 +90,8 @@ public class FastComCQ {
             sumQ += temp.next().getCount();
         }
 
+        //keep removing posts from the priority queue and for each post, add the next most popular post to the pq, until the answer
+        //list has enough posts for the query
         while(!pq.isEmpty()){
             Post e = pq.poll(); 
                 for(List<String> entry: e.parentSlice){

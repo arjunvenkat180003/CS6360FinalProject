@@ -20,6 +20,7 @@ public class BaselineCOMQ {
         //map postId to count
         Map<String, Integer> hashStructureA = new HashMap<>();
 
+        //filter relevant posts from each time slice
         for(TimeSlice timeSlice: timeSlices)
         {
             if(timeSlice.endTime.compareTo(startTimestamp) < 0)
@@ -60,6 +61,7 @@ public class BaselineCOMQ {
             
         }
 
+        //for each post, add it and the number of interactions to a hash structure
         for(List<List<String>> entries: queryLists)
         {
             for (List<String> entry: entries)
@@ -88,11 +90,13 @@ public class BaselineCOMQ {
             }
         }
         
+        //sort all of the posts  based on number of interactions
         List<String> topPostIds = new ArrayList<>(hashStructureA.keySet());
 
 
         Collections.sort(topPostIds, new PostIdComparator(hashStructureA));
 
+        //return only the top k posts of the sorted list
         if(k <= topPostIds.size())
         {
             return topPostIds.subList(0, k);
