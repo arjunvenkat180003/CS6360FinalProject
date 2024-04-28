@@ -2,7 +2,6 @@ import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class TimeSlice
@@ -46,20 +45,7 @@ public class TimeSlice
         //index into master structure
         for(Post post: posts)
         {
-            masterIndex.put(post.postId, post);
-            
-            //System.out.println(post.keywords);
-            // String postId = post.get(0);
-            // String count = post.get(1);
-            // String location = post.get(2);
-
-            // List<String> masterHashStuctureValue = new ArrayList<>();
-            // masterHashStuctureValue.add(location);
-            // masterHashStuctureValue.add(count);
-
-            // masterHashStructure.put(postId, masterHashStuctureValue);
-
-            
+            masterIndex.put(post.postId, post);  
         }
 
         //index into user hash structure
@@ -72,9 +58,7 @@ public class TimeSlice
             String postId = p.postId;
             String location = p.location;
             List<String> keywords = p.keywords;
-            //System.out.println(postId);
-            //System.out.println(keywords);
-            //System.out.println(masterIndex.get(postId));
+
             //update userIndex
             if(userIndex.containsKey(userId))
             {
@@ -117,12 +101,9 @@ public class TimeSlice
 
             for(String keyword: keywords)
             {
-                //System.out.println(keyword);
                 if(invertedIndex.containsKey(keyword))
                 {
                     Map<String, List<String>> keywordHashStructure = invertedIndex.get(keyword);
-
-                    //System.out.println("kwhs alr inside inverted index "+keywordHashStructure+" "+postId);
 
                     if(keywordHashStructure.containsKey(postId)){
 
@@ -155,7 +136,6 @@ public class TimeSlice
 
                     keywordHashStructure.put(postId, postValue);
 
-                    //System.out.println("kw + kwhs "+keyword+" "+keywordHashStructure);
                     invertedIndex.put(keyword, keywordHashStructure);
                 }
             }
@@ -163,56 +143,6 @@ public class TimeSlice
 
         }
     }
-
-
-
-
-
-    
-    
-    // public void appendPostData(String postID, String location, String interactions, List<String> keyWords)
-    // {
-    //     List<String> masterHashStructureValue = new ArrayList<>();
-    //     masterHashStructureValue.add(location); 
-    //     masterHashStructureValue.add(interactions);
-
-    //     masterHashStructure.put(postID, masterHashStructureValue);
-
-    //     for(String keyWord: keyWords)
-    //     {
-    //         if(invertedIndex.get(keyWord) == null)
-    //         {
-    //             //inner hash structure for each key word in the inverted index
-    //             Map<String, List<String>> innerHashStructure = new HashMap<>();
-
-    //             //create values for innerHashStructure
-    //             List<String> innerHashStructureValue = new ArrayList<>();
-    //             innerHashStructureValue.add(location);
-    //             innerHashStructureValue.add(interactions);
-
-    //             innerHashStructure.put(postID, innerHashStructureValue);
-
-    //             invertedIndex.put(keyWord, innerHashStructure);
-
-    //         }
-    //         else
-    //         {
-    //             Map<String, List<String>> innerHashStructure = invertedIndex.get(keyWord);
-
-    //             //create values for innerHashStructure
-    //             List<String> innerHashStructureValue = new ArrayList<>();
-    //             innerHashStructureValue.add(location);
-    //             innerHashStructureValue.add(interactions);
-
-    //             innerHashStructure.put(postID, innerHashStructureValue);
-
-    //             invertedIndex.put(keyWord, innerHashStructure);
-
-
-    //         }
-    //     }
-    // }
-
 
 
 }

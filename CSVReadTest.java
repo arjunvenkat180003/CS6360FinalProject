@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.sql.Timestamp;
 import java.time.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -64,7 +63,6 @@ public class CSVReadTest {
             }
             //Data is contained within 01/01/2023 to 06/30/2023
             String[] values = line.split(",");
-            //System.out.println(Arrays.toString(values));
             
             //7th index has the time stamp
             Date postDate = sdf.parse(values[8]);
@@ -106,7 +104,6 @@ public class CSVReadTest {
                 continue;
             }
             String[] values = line.split(",");
-            //System.out.println(Arrays.toString(values));
 
             String userId = values[1];
             String postId = values[2];
@@ -158,8 +155,6 @@ public class CSVReadTest {
         long startTime = System.currentTimeMillis();
         bscqTest.testVaryingTimeWithKeywords("2023-01-01 00:00:00", "2023-06-30 23:59:59", keywords);
         long endTime = System.currentTimeMillis();
-        // startTime /= 1000;
-        // endTime /= 1000;
         long difference = endTime-startTime;
         System.out.println("For r=7 ");
         System.out.println("Time to eval : "+difference);

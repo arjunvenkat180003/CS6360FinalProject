@@ -45,7 +45,6 @@ public class BaselineCOMQ {
 
             for(Map<String, List<String>> invertedIndexEntry: invertedIndexEntries)
             {
-                //System.out.println(invertedIndexEntry);
                 for(String postId: invertedIndexEntry.keySet())
                 {
                     List<String> entry = new ArrayList<>();
